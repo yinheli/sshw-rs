@@ -1,0 +1,24 @@
+[package]
+name = "sshw"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "3.2", features = ["derive"] }
+anyhow = "1"
+serde = { version = "1", features = ["rc"] }
+serde_derive = "1"
+serde_yaml = "0.9"
+dialoguer = { version = "0.10", features = ["fuzzy-select"] }
+dirs = "4"
+ssh2-config = "0.1"
+expectrl = "0.5.2"
+
+[profile.release]
+opt-level = 'z'
+lto = true
+strip = true
+codegen-units = 1
+panic = 'abort'
