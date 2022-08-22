@@ -9,10 +9,13 @@ mod config;
 
 #[derive(Parser, Debug)]
 #[clap(version, about)]
-struct Args {}
+struct Args {
+    #[clap(long)]
+    verbose: bool,
+}
 
 fn main() {
-    let _ = Args::parse();
+    let cli = Args::parse();
 
     let files = vec![".sshw", ".sshw.yml", ".sshw.yaml"];
     let home = dirs::home_dir().unwrap();
@@ -40,11 +43,13 @@ fn main() {
 
     let host = hosts[id.unwrap()].clone();
 
-    login(&host);
+    let opt = if cli.verbose { Some("-vvv") } else { None };
+
+    login(&host, opt);
 }
 
-fn login(host: &Host) {
-    let shell = host.to_ssh();
+fn login(host: &Host, opt: Option<&str>) {
+    let shell = host.to_ssh(opt);
     let mut sh = expectrl::spawn(shell.clone()).expect("Error while spawning sh");
 
     println!("Connecting to {}", shell);

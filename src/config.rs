@@ -20,7 +20,7 @@ pub(crate) struct Host {
 }
 
 impl Host {
-    pub fn to_ssh(&self) -> String {
+    pub fn to_ssh(&self, opt: Option<&str>) -> String {
         let mut ssh = String::new();
         ssh.push_str("ssh ");
         if self.user.is_some() {
@@ -39,6 +39,11 @@ impl Host {
         if let Some(port) = self.port {
             ssh.push_str(" -p ");
             ssh.push_str(&port.to_string());
+        }
+
+        if let Some(opt) = opt {
+            ssh.push(' ');
+            ssh.push_str(opt);
         }
         ssh
     }
