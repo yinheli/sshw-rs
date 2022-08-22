@@ -2,6 +2,14 @@
 name = "sshw"
 version = "0.1.0"
 edition = "2021"
+authors = ["yinheli <me@yinheli.com>"]
+license = "MIT"
+repository = "https://github.com/yinheli/sshw-rs"
+keywords = ["ssh", "automatic"]
+readme = "README.md"
+description = """
+ssh client wrapper for automatic login.
+"""
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
