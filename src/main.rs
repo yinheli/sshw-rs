@@ -52,6 +52,9 @@ fn login(host: &Host, opt: Option<&str>) {
     let shell = host.to_ssh(opt);
     let mut sh = expectrl::spawn(shell.clone()).expect("Error while spawning sh");
 
+    let termsize::Size { rows, cols } = termsize::get().unwrap();
+    sh.set_window_size(cols, rows).unwrap();
+
     println!("Connecting to {}", shell);
 
     if let Some(password) = host.password.clone() {

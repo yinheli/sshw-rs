@@ -23,6 +23,7 @@ dialoguer = { version = "0.10", features = ["fuzzy-select"] }
 dirs = "4"
 ssh2-config = "0.1"
 expectrl = "0.5.2"
+termsize = "0.1"
 
 [profile.release]
 opt-level = 'z'
