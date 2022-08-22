@@ -1,6 +1,7 @@
 use clap::Parser;
 use config::Host;
 use dialoguer::{theme::ColorfulTheme, FuzzySelect};
+use expectrl::Regex;
 
 use std::process;
 
@@ -49,8 +50,11 @@ fn login(host: &Host) {
     println!("Connecting to {}", shell);
 
     if let Some(password) = host.password.clone() {
-        sh.expect("password: ").unwrap();
-        sh.send_line(&password).unwrap();
+        if let Ok(c) = sh.expect(Regex("(?i)Password:")) {
+            if !c.is_empty() {
+                sh.send_line(&password).unwrap();
+            }
+        }
     }
 
     sh.interact().unwrap();
