@@ -3,7 +3,7 @@ use config::Host;
 use dialoguer::{theme::ColorfulTheme, FuzzySelect};
 use expectrl::Regex;
 
-use std::process;
+use std::{process, time::Duration};
 
 mod config;
 
@@ -51,6 +51,9 @@ fn main() {
 fn login(host: &Host, opt: Option<&str>) {
     let shell = host.to_ssh(opt);
     let mut sh = expectrl::spawn(shell.clone()).expect("Error while spawning sh");
+    sh.set_expect_lazy(true);
+    sh.set_echo(true, Some(Duration::from_millis(100))).unwrap();
+    sh.set_expect_timeout(Some(Duration::from_secs(3)));
 
     let termsize::Size { rows, cols } = termsize::get().unwrap();
     sh.set_window_size(cols, rows).unwrap();
