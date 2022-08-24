@@ -22,8 +22,11 @@ serde_yaml = "0.9"
 dialoguer = { version = "0.10", features = ["fuzzy-select"] }
 dirs = "4"
 ssh2-config = "0.1"
-expectrl = "0.5.2"
 termsize = "0.1"
+# expectrl = "0.5"
+expectrl = { git = "https://github.com/zhiburt/expectrl/", branch = "reduce_cpu_usage_in_interact", features = [
+  "polling",
+] }
 
 [profile.release]
 opt-level = 'z'
