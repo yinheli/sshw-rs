@@ -22,14 +22,7 @@ pub(crate) struct Host {
 impl Host {
     pub fn to_ssh(&self, opt: Option<&str>) -> String {
         let mut ssh = String::new();
-        ssh.push_str("ssh ");
-        if self.user.is_some() {
-            ssh.push_str(&self.user.clone().unwrap())
-        } else {
-            ssh.push_str("root")
-        }
-        ssh.push('@');
-        ssh.push_str(&self.host);
+        ssh.push_str("ssh");
 
         if let Some(keypath) = self.keypath.clone() {
             ssh.push_str(" -i ");
@@ -45,6 +38,17 @@ impl Host {
             ssh.push(' ');
             ssh.push_str(opt);
         }
+
+        if self.user.is_some() {
+            ssh.push(' ');
+            ssh.push_str(&self.user.clone().unwrap())
+        } else {
+            ssh.push(' ');
+            ssh.push_str("root")
+        }
+        ssh.push('@');
+        ssh.push_str(&self.host);
+
         ssh
     }
 }

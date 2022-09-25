@@ -50,6 +50,7 @@ fn main() {
 
 fn login(host: &Host, opt: Option<&str>) {
     let shell = host.to_ssh(opt);
+    println!("{}", shell);
     let mut sh = expectrl::spawn(shell.clone()).expect("Error while spawning sh");
     sh.set_expect_lazy(true);
     sh.set_echo(true, Some(Duration::from_millis(100))).unwrap();
@@ -58,15 +59,17 @@ fn login(host: &Host, opt: Option<&str>) {
     let termsize::Size { rows, cols } = termsize::get().unwrap();
     sh.set_window_size(cols, rows).unwrap();
 
-    println!("Connecting to {}", shell);
+    println!("Connecting: {}", shell);
 
     if let Some(password) = host.password.clone() {
-        if let Ok(c) = sh.expect(Regex("(?i)Password:")) {
+        if let Ok(c) = sh.expect(Regex("(?i)password:")) {
             if !c.is_empty() {
                 sh.send_line(&password).unwrap();
             }
         }
     }
 
-    sh.interact().unwrap();
+    let mut input = std::io::stdin();
+    let mut output = std::io::stdout();
+    let _ = sh.interact(&mut input, &mut output).spawn().unwrap();
 }
