@@ -14,7 +14,7 @@ ssh client wrapper for automatic login.
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-clap = { version = "3.2", features = ["derive"] }
+clap = { version = "4.1", features = ["derive"] }
 anyhow = "1"
 serde = { version = "1", features = ["rc"] }
 serde_derive = "1"
